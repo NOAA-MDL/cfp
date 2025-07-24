@@ -1,5 +1,7 @@
 # cfp
-Command File Processor (cfp) is a MPI Fortran-based command line utility that allows for the execution of shell scripts or executables in parallel.
+Command File Processor (cfp) is a MPI Fortran-based command line utility that allows for the execution of shell scripts or executables in parallel.  It is intended to run simple, smaller serial jobs and will the overhead of placing many jobs into a batch queue manager.
+
+
 
 ## Disclaimer
 
