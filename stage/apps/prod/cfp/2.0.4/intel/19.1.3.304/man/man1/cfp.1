@@ -1,0 +1,39 @@
+.\" Manpage for cfp 
+.\" Contact help@wcoss2.noaa.gov for additional help 
+.TH man 8 "August 18, 2020" "2.0.3" "cfp man page"
+.SH NAME
+.BR cfp
+\- Launch a number of small jobs across nodes/cpus in one batch command. 
+.SH SYNOPSIS
+.BR cfp
+command_file
+.SH DESCRIPTION
+.BR cfp 
+takes as input a command_file which contains a list of commands to run - one per line.  It uses mpi programming to distribute the jobs across multiple nodes and cpus in concert with the local job scheduler.  Care must be taken in the the definition of the "job card" to manage the number of nodes and/or cpus allocated for the job and the number of nodes/cpus requested in the local mpi run command.   For example "cray mpirun" or "cray aprun".
+.BR cfp
+is intended for running a collection of many short jobs and elimintes the overhead of managing each sub-job individually by the job manager.  If an error code is returned from one of the subtasks, 
+.BR cfp
+will wait for other active jobs to finish. It will then exit without starting any additional jobs.  This behavior can be changed by use of the CFP_DOALL environment variable described below.
+.SH OPTIONS
+.BR cfp
+does not use any options. However, it does respond to the values of the environment variables described here.
+.SH ENVIRONMENT VARIABLES
+.IP CFP_VERBOSE
+If this is set to any value, additional information will be printed out as the program runs.
+.IP CFP_DOALL
+If this is set to any value processing will continue to run even if a subtask returns an error.
+.IP CFP_DELAY
+Set this to the number of seconds to delay before running any tasks. Default is no delay.
+.IP CFP_MINMEM
+Specifies the amount of memory in GB to reserve for subtasks.
+.BR cfp
+will wait until this much memory is available before launching the next task.
+.SH SEE ALSO
+For additional information and discussion of how to use cfp please see the examples directory:
+.PP
+.BR /apps/docs/samples/intel/cfp-job
+.SH BUGS
+.BR cfp
+expects good behavior from the user and does not perform many checks for error conditions like bad input, invalid commands, valid environment etc..  This is all up to the user to check before using 
+.BR cfp
+.
