@@ -1,6 +1,6 @@
 # cfp
 
-Command File Processor (cfp) is a MPI Fortran-based command line utility that allows for the execution of shell scripts or executables in parallel.  It is intended to run simple, smaller serial jobs and will the overhead of placing many jobs into a batch queue manager.
+Command File Processor (cfp) is a MPI Fortran-based command line utility that allows for the execution of shell scripts or executables in parallel.  It is intended to run simple, smaller serial jobs without the overhead of placing many jobs into a batch queue manager.
 
 `cfp` accepts one argument, a command file which contains a list of commands to run, one per line. It uses MPI programming to distribute the jobs across multiple nodes and CPUs in concert with the local job scheduler. Care must be taken in the the definition of the “job card” to manage the number of nodes and/or cpus allocated for the job and the number of nodes/CPUs requested in the local MPI run command. cfp is intended for running a collection of many short jobs and elimintes the overhead of managing each sub-job individually by the job manager. If an error code is returned from one of the sub-tasks, cfp will wait for other active jobs to finish. It will then exit without starting any additional jobs. This behavior can be changed by use of the `CFP_DOALL` environment variable described below.
 
