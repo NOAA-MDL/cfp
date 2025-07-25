@@ -10,6 +10,13 @@ Steven Bongiovanni, Eric Engle, Jim Taft
 
 Code Manager: [Eric Engle](mailto:eric.engle@noaa.gov)
 
+## Required Software
+
+* CMake
+* Fortran compiler (GNU or Intel recommended)
+* MPI (OpenMPI, Intel MPI)
+* OpenMP
+
 ## Disclaimer
 
 The United States Department of Commerce (DOC) GitHub project code is provided
