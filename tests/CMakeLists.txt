@@ -23,8 +23,8 @@ file(
 # ----------------------------------------------------------------------------------------
 enable_testing()
 add_test(
-  NAME cfp_mpi_integration
-  COMMAND ${CMAKE_CURRENT_BINARY_DIR}/main_cfp_test.sh
+  NAME cfp_test_simple
+  COMMAND ${CMAKE_CURRENT_BINARY_DIR}/main_cfp_test_simple.sh
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
