@@ -15,11 +15,9 @@ program cfp
 ! Parameters:
 !
 ! ---------------------------------------------------------------------------------------- 
-!use ifport
 use iso_c_binding
+use mpi
 implicit none
-
-include "mpif.h"
 
 interface
   integer(kind=c_int) function c_access(path, mode) bind(C, name="access")
