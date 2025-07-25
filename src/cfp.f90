@@ -207,6 +207,8 @@ do 400 n=1,4096
    memnow=get_free_memory()
    if(idoio.ne.0) write(8000+nrank,804) nrank,ncomm,kdate,ktime,t2-t1,memnow
    jerror=0
+
+   ! Execute command
    t1=mpi_wtime()
    jerror=system(trim(evalue))
    t2=mpi_wtime()
