@@ -7,6 +7,6 @@ chmod 744 cfp_command_file.txt
 export CFP_VERBOSE=1
 export NCPUS=2
 
-mpirun -N 2 ../cfp cfp_command_file.txt
+mpirun -N ${NCPUS} ../cfp cfp_command_file.txt
 
 echo "Exit code: $?"
