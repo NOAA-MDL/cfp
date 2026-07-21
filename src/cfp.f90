@@ -7,12 +7,33 @@ program cfp
 !          Jim Taft
 !
 ! Purpose:
-!
-! History:
+!   Execute the shell commands listed in a command file concurrently across MPI ranks.
+!   Commands are assigned to ranks in round-robin order, with each rank executing its
+!   assigned commands sequentially.  The program can optionally produce per-rank logs,
+!   stagger command launches, wait for a minimum amount of free memory, and either stop
+!   after the first detected command failure or continue processing all commands.
 !
 ! Usage:
+!   mpiexec -n <number_of_ranks> cfp <command_file>
 !
-! Parameters:
+!   The command file must contain one shell command per line.  CFP supports at most
+!   CFP_MAX_COMMANDS commands per MPI rank.  It exits with status 0 when all commands
+!   succeed and status 1 when the command file cannot be opened or any command fails.
+!
+! Argument:
+!   command_file  Path to the text file containing commands to execute.
+!
+! Environment variables:
+!   CFP_VERBOSE  Set to a nonzero integer to write per-rank log files beneath a
+!                CFP.<process_id> directory.  Default: 0.
+!   CFP_DOALL    Set to a nonzero integer to continue after command failures.  When 0,
+!                all ranks stop taking new work after a failure is detected.  Default: 0.
+!   CFP_DELAY    Number of seconds used to stagger rank startup.  Rank delays are
+!                calculated as MOD(rank, NCPUS) * CFP_DELAY.  Default: 0.
+!   CFP_MINMEM   Minimum free memory, in GiB, required before launching a command.
+!                This check uses /proc/meminfo and is therefore Linux-specific.
+!                Default: 0.
+!   NCPUS        Number of ranks in each launch-stagger group.  Default: 1.
 !
 ! ----------------------------------------------------------------------------------------
 use iso_c_binding
