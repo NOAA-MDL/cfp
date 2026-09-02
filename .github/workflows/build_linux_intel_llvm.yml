@@ -11,22 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: "Install Intel compilers & MPI"
+        uses: NOAA-EMC/ci-install-intel-toolkit@develop
+        with:
+          install-oneapi: true
+          install-mpi: true
+          install-openmp: true
+          mpi-wrapper-setup: oneapi
+
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Install Intel oneAPI
+      - name: Install dependencies
         run: |
-          wget -qO- https://apt.repos.intel.com/oneapi/intel-oneapi-archive-keyring.gpg \
-            | sudo gpg --dearmor -o /usr/share/keyrings/oneapi-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
-            | sudo tee /etc/apt/sources.list.d/oneAPI.list
-          sudo apt-get update
-          sudo apt-get install -y \
-            cmake \
-            intel-oneapi-compiler-dpcpp-cpp \
-            intel-oneapi-compiler-fortran \
-            intel-oneapi-mpi \
-            intel-oneapi-mpi-devel
+          apt-get update
+          apt-get install -y cmake
 
       - name: Configure CMake
         run: |
