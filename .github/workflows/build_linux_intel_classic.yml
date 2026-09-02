@@ -1,0 +1,47 @@
+name: Build Linux Intel Classic
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    container:
+      image: intel/oneapi-hpckit:2023.2.1-devel-ubuntu22.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y cmake
+
+      - name: Configure CMake
+        shell: bash
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cmake -S . -B build \
+            -DCMAKE_C_COMPILER=icc \
+            -DCMAKE_CXX_COMPILER=icpc \
+            -DCMAKE_Fortran_COMPILER=ifort
+
+      - name: Build
+        shell: bash
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cmake --build build --parallel
+
+      - name: Run tests (CTest)
+        shell: bash
+        env:
+          I_MPI_ALLOW_RUN_AS_ROOT: "1"
+          I_MPI_ALLOW_RUN_AS_ROOT_CONFIRM: "1"
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cd build
+          ctest --output-on-failure

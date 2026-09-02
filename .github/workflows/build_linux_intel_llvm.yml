@@ -1,0 +1,48 @@
+name: Build Linux Intel LLVM
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Intel oneAPI
+        run: |
+          wget -qO- https://apt.repos.intel.com/oneapi/intel-oneapi-archive-keyring.gpg \
+            | sudo gpg --dearmor -o /usr/share/keyrings/oneapi-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
+            | sudo tee /etc/apt/sources.list.d/oneAPI.list
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            intel-oneapi-compiler-dpcpp-cpp \
+            intel-oneapi-compiler-fortran \
+            intel-oneapi-mpi \
+            intel-oneapi-mpi-devel
+
+      - name: Configure CMake
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cmake -S . -B build \
+            -DCMAKE_C_COMPILER=icx \
+            -DCMAKE_CXX_COMPILER=icpx \
+            -DCMAKE_Fortran_COMPILER=ifx
+
+      - name: Build
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cmake --build build --parallel
+
+      - name: Run tests (CTest)
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cd build
+          ctest --output-on-failure
