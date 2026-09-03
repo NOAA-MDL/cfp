@@ -3,7 +3,7 @@
 #
 # Eric Engle
 # ----------------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.18)
 file(STRINGS "VERSION" pVersion)
 project(cfp VERSION ${pVersion} LANGUAGES Fortran)
 include(GNUInstallDirs)
@@ -93,7 +93,9 @@ message(STATUS "cfp version: ${pVersion}")
 message(STATUS "Build date: ${CFP_BUILD_DATE}")
 
 # ----------------------------------------------------------------------------------------
-# Testing
+# Build tests.
 # ----------------------------------------------------------------------------------------
 include(CTest)
-add_subdirectory(tests)
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
