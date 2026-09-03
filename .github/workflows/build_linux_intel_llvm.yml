@@ -32,9 +32,9 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -S . -B build \
-            -DCMAKE_C_COMPILER=icx \
-            -DCMAKE_CXX_COMPILER=icpx \
-            -DCMAKE_Fortran_COMPILER=ifx
+            -DCMAKE_C_COMPILER=mpiicx \
+            -DCMAKE_CXX_COMPILER=mpiicpx \
+            -DCMAKE_Fortran_COMPILER=mpiifx
 
       - name: Build
         run: |
