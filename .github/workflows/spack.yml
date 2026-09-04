@@ -1,0 +1,26 @@
+name: Spack Build & Test
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+  # This job builds with Spack using every combination of variants and runs the CTest suite each time
+  Spack:
+    permissions:
+      packages: read
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: "Build Spack package"
+      uses: NOAA-EMC/ci-test-spack-package@develop
+      with:
+        package-name: cfp
+        custom-recipe: spack/package.py
+        spack-compiler: gcc
