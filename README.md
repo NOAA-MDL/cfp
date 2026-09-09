@@ -17,6 +17,15 @@ Code Manager: [Eric Engle](mailto:eric.engle@noaa.gov)
 * MPI (OpenMPI, Intel MPI)
 * OpenMP
 
+## Environment Variable Configuration
+
+| Variable | Default | Description |
+| :--- | :--- | :--- |
+| **`CFP_VERBOSE`** | *Unset* | If set (to any value), enables verbose debugging output as the program runs. |
+| **`CFP_DOALL`** | *Unset* | If set (to any value), continues executing remaining tasks even if a subtask fails with an error. |
+| **`CFP_DELAY`** | `0` | Number of seconds to delay execution before running any tasks. |
+| **`CFP_MINMEM`** | *Unset* | Minimum memory requirement in GB. `cfp` will wait until this amount of memory is available before launching the next task. |
+
 ## Disclaimer
 
 The United States Department of Commerce (DOC) GitHub project code is provided
