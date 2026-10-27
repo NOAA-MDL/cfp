@@ -15,7 +15,6 @@ Code Manager: [Eric Engle](mailto:eric.engle@noaa.gov)
 * CMake
 * Fortran compiler (GNU or Intel recommended)
 * MPI (OpenMPI, Intel MPI)
-* OpenMP
 
 ## Environment Variable Configuration
 

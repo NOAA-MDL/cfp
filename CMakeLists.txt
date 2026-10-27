@@ -64,7 +64,7 @@ add_executable(cfp src/cfp.f90)
 # ----------------------------------------------------------------------------------------
 # Link MPI Fortran and OpenMP
 # ----------------------------------------------------------------------------------------
-target_link_libraries(cfp PRIVATE MPI::MPI_Fortran OpenMP::OpenMP_Fortran)
+target_link_libraries(cfp PRIVATE MPI::MPI_Fortran)
 
 # ----------------------------------------------------------------------------------------
 # Configure the manpage from template
